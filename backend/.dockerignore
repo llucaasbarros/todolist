@@ -1,0 +1,22 @@
+# Ambiente virtual
+venv/
+.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Git
+.git/
+.gitignore
+
+# Arquivos temporários / IDE
+.env
+.vscode/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
