@@ -40,19 +40,20 @@ docker compose exec backend python src/manage.py createsuperuser
 
 ## Testes
 
+backend:
 ```
-Com coverage
-docker compose exec backend pytest --cov=apps --cov-report=term-missing
-Sem coverage
-docker compose exec backend pytest
+docker compose exec backend pytest --cov=apps --cov-report=term-missing  # com cobertura
+docker compose exec backend pytest  # sem cobertura
 ```
 
+frontend:
 ```
 cd frontend
 npm run lint
 npm run build
 ```
 
+selenium:
 ```
 cd frontend/e2e
 python3 -m venv .venv
