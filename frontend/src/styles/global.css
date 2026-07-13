@@ -32,3 +32,123 @@ body {
 #root {
   min-height: 100vh;
 }
+
+/* Form primitives, shared across features */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.field input,
+.field select,
+.field textarea {
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  outline: none;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.field-error {
+  font-size: 12px;
+  color: var(--color-danger);
+}
+
+.btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: var(--color-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-ghost {
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border-color: var(--color-border);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-danger {
+  color: var(--color-danger);
+  background-color: transparent;
+  border-color: var(--color-danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  color: #fff;
+  background-color: var(--color-danger);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 999px;
+  background-color: var(--color-bg);
+  color: var(--color-text-secondary);
+}
+
+.badge-danger {
+  background-color: #fdecec;
+  color: var(--color-danger);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.alert {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--color-danger);
+  background-color: #fdecec;
+  border-radius: 4px;
+}
