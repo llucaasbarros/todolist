@@ -16,7 +16,7 @@ Precisa ter Docker e Docker Compose instalados.
 Clona o repositório e entra na pasta:
 
 ```
-git clone <url-do-repo>
+git clone https://github.com/llucaasbarros/todolist.git
 cd todolist
 ```
 
@@ -102,9 +102,9 @@ Frontend organizado por feature em `frontend/src/`:
 ## Decisões de design
 
 - Usuário customizado desde o início (accounts.UserModel), pra não ter que migrar depois se precisar de campo extra.
-- Isolamento por usuário no get_queryset de cada viewset, não só escondido no frontend. Categoria de outro usuário é rejeitada na validação do serializer.
-- Compartilhamento de tarefa é só leitura, garantido por permission class no backend (IsOwnerOrReadOnly), não só por botão escondido na tela.
-- Feriados nacionais via BrasilAPI, com cache de 24h, reaproveitado no serializer de tarefa pra marcar vencimento em feriado.
+- Isolamento por usuário no get_queryset de cada viewset Categoria de outro usuário é rejeitada na validação do serializer.
+- Compartilhamento de tarefa é só leitura, garantido por permission class no backend (IsOwnerOrReadOnly).
+- Feriados nacionais via BrasilAPI que são apontados na tela quando se cria uma data de vencimento no dia de um feriado ex:07/09/2026.
 - Frontend sem biblioteca de UI, CSS puro com variáveis.
 - Frontend em produção atrás de nginx, build multi-stage, com fallback de rota pro react-router.
 - Selenium roda contra container selenium/standalone-chrome, sem precisar instalar Chrome e driver na máquina.
