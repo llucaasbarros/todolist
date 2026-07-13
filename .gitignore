@@ -35,6 +35,7 @@ frontend/e2e/screenshots/
 
 .vscode/
 .idea/
+.claude/
 .DS_Store
 Thumbs.db
 

@@ -1,9 +1,9 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import LoginPage from "../features/auth/pages/LoginPage";
-import RegisterPage from "../features/auth/pages/RegisterPage";
-import TasksPage from "../features/tasks/pages/TasksPage";
-import CategoriesPage from "../features/categories/pages/CategoriesPage";
+import LoginPage from "../features/auth/views/LoginPage";
+import RegisterPage from "../features/auth/views/RegisterPage";
+import TasksPage from "../features/tasks/views/TasksPage";
+import CategoriesPage from "../features/categories/views/CategoriesPage";
 import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRoutes() {
