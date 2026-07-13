@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from apps.categories.serializers import CategorySerializer
@@ -41,15 +42,18 @@ class TaskSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("owner", "created_at", "updated_at")
 
+    @extend_schema_field(serializers.BooleanField)
     def get_is_owner(self, obj):
         request = self.context.get("request")
         return bool(request and obj.owner_id == request.user.id)
 
+    @extend_schema_field(TaskShareUserSerializer(many=True))
     def get_shared_with(self, obj):
         return TaskShareUserSerializer(
             [share.shared_with for share in obj.shares.all()], many=True
         ).data
 
+    @extend_schema_field(serializers.BooleanField)
     def get_due_date_is_holiday(self, obj):
         if not obj.due_date:
             return False

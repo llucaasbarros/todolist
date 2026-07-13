@@ -10,6 +10,8 @@ class CategoryViewSet(ModelViewSet):
     serializer_class = CategorySerializer
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return CategoryModel.objects.none()
         return CategoryModel.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):

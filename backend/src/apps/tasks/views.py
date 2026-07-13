@@ -19,6 +19,8 @@ class TaskViewSet(ModelViewSet):
     filterset_fields = ("is_completed", "category", "priority")
 
     def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return TaskModel.objects.none()
         user = self.request.user
         return (
             TaskModel.objects.filter(Q(owner=user) | Q(shares__shared_with=user))

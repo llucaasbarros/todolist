@@ -12,6 +12,7 @@ from .serializers import HolidaySerializer
 
 class HolidaysView(APIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = HolidaySerializer
 
     def get(self, request):
         year = request.query_params.get("year", date.today().year)

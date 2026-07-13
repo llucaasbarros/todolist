@@ -4,7 +4,7 @@ Gerenciador de tarefas, teste técnico. Django REST Framework + React, tudo em D
 
 ## Stack
 
-Backend: Django 5.2, DRF, JWT (simplejwt), Postgres, pytest.
+Backend: Django 5.2, DRF, JWT (simplejwt), Postgres, pytest, drf-spectacular (Swagger).
 Frontend: React 18, Vite, react-router-dom, axios, CSS puro.
 Testes: pytest (backend, com cobertura) e Selenium (frontend).
 CI: GitHub Actions, ruff no backend, eslint no frontend.
@@ -27,6 +27,7 @@ Migrations rodam sozinhas no start do backend.
 frontend: http://localhost:5183
 admin: http://localhost:8000/admin
 api: http://localhost:8000/api
+docs (swagger): http://localhost:8000/api/docs/
 
 Superusuário pro admin:
 
