@@ -34,5 +34,24 @@ services:
       db:
         condition: service_healthy
 
+  frontend:
+    build:
+      context: ./frontend
+    container_name: todolist_frontend
+    restart: unless-stopped
+    ports:
+      - "5183:80"
+    depends_on:
+      - backend
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    container_name: todolist_selenium
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+    depends_on:
+      - frontend
+
 volumes:
   postgres_data:
