@@ -1,46 +1,34 @@
 # To-Do List
 
-Aplicação de gerenciamento de tarefas, feita como teste técnico. Backend em Django REST Framework, frontend em React, tudo rodando em containers Docker.
+Gerenciador de tarefas, teste técnico. Django REST Framework + React, tudo em Docker.
 
 ## Stack
 
-Backend: Django 5.2, Django REST Framework, JWT (simplejwt), Postgres, pytest.
-Frontend: React 18, Vite, react-router-dom, axios, CSS puro (sem Tailwind, sem lib de componentes).
-Testes: pytest no backend (com cobertura), Selenium no frontend.
-CI: GitHub Actions, lint com ruff no backend e eslint no frontend.
+Backend: Django 5.2, DRF, JWT (simplejwt), Postgres, pytest.
+Frontend: React 18, Vite, react-router-dom, axios, CSS puro.
+Testes: pytest (backend, com cobertura) e Selenium (frontend).
+CI: GitHub Actions, ruff no backend, eslint no frontend.
 
 ## Como rodar
 
-Precisa ter Docker e Docker Compose instalados.
-
-Clona o repositório e entra na pasta:
+Precisa de Docker e Docker Compose.
 
 ```
 git clone https://github.com/llucaasbarros/todolist.git
 cd todolist
-```
-
-Copia os arquivos de variáveis de ambiente:
-
-```
 cp .env.example .env
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
-```
-
-Sobe tudo:
-
-```
 docker compose up -d
 ```
 
-O backend aplica as migrations sozinho quando o container sobe (não precisa rodar nada manual). Depois de alguns segundos:
+Migrations rodam sozinhas no start do backend.
 
 frontend: http://localhost:5183
-backend / admin: http://localhost:8000/admin
+admin: http://localhost:8000/admin
 api: http://localhost:8000/api
 
-Pra acessar o admin precisa de um superusuário:
+Superusuário pro admin:
 
 ```
 docker compose exec backend python src/manage.py createsuperuser
@@ -48,31 +36,22 @@ docker compose exec backend python src/manage.py createsuperuser
 
 ## Variáveis de ambiente
 
-O `.env` da raiz define usuário e senha do Postgres que sobe no container `db`. O `backend/.env` usa essas mesmas credenciais pra conectar no banco. O `frontend/.env` só tem a URL da API, que já aponta pro backend em localhost:8000 por padrão.
+`.env` da raiz: usuário/senha do Postgres. `backend/.env`: mesmas credenciais + config do Django. `frontend/.env`: URL da API.
 
 ## Testes
 
-Backend, com cobertura:
-
 ```
+Com coverage
 docker compose exec backend pytest --cov=apps --cov-report=term-missing
-```
-
-Backend, sem cobertura:
-
-```
+Sem coverage
 docker compose exec backend pytest
 ```
-
-Frontend, lint e build:
 
 ```
 cd frontend
 npm run lint
 npm run build
 ```
-
-Selenium, com a stack já no ar:
 
 ```
 cd frontend/e2e
@@ -83,28 +62,28 @@ python3 -m venv .venv
 
 ## Estrutura
 
-Backend, apps separadas por domínio em `backend/src/apps/`:
+Backend, `backend/src/apps/`:
 
-- `core`: uma model abstrata (TimeStampedModel) reaproveitada pelas outras apps, não vira tabela própria.
-- `accounts`: usuário customizado e os endpoints de registro e login.
-- `categories`: CRUD de categorias, sempre isolado por dono.
-- `tasks`: CRUD de tarefas, compartilhamento, filtro, paginação.
-- `holidays`: integração com a BrasilAPI pra marcar quando o vencimento de uma tarefa cai num feriado nacional.
+- `core`: model abstrata (TimeStampedModel), sem tabela própria.
+- `accounts`: usuário customizado, registro e login.
+- `categories`: CRUD de categoria, isolado por dono.
+- `tasks`: CRUD de tarefa, compartilhamento, filtro, paginação.
+- `holidays`: feriados nacionais via BrasilAPI.
 
-Frontend organizado por feature em `frontend/src/`:
+Frontend, `frontend/src/`:
 
-- `api`: cliente axios e as chamadas HTTP por recurso.
-- `features/<nome>/views`: as telas.
-- `features/<nome>/components`: pedaços reutilizáveis dentro de cada feature.
-- `components`: componentes genéricos usados em mais de uma feature (layout, paginação, toast).
-- `contexts` e `hooks`: autenticação e outros estados globais.
+- `api`: chamadas HTTP por recurso.
+- `features/<nome>/views`: telas.
+- `features/<nome>/components`: pedaços de cada feature.
+- `components`: genéricos (layout, paginação, toast).
+- `contexts`/`hooks`: auth e outros estados globais.
 
 ## Decisões de design
 
-- Usuário customizado desde o início (accounts.UserModel), pra não ter que migrar depois se precisar de campo extra.
-- Isolamento por usuário no get_queryset de cada viewset Categoria de outro usuário é rejeitada na validação do serializer.
-- Compartilhamento de tarefa é só leitura, garantido por permission class no backend (IsOwnerOrReadOnly).
-- Feriados nacionais via BrasilAPI que são apontados na tela quando se cria uma data de vencimento no dia de um feriado ex:07/09/2026.
-- Frontend sem biblioteca de UI, CSS puro com variáveis.
-- Frontend em produção atrás de nginx, build multi-stage, com fallback de rota pro react-router.
-- Selenium roda contra container selenium/standalone-chrome, sem precisar instalar Chrome e driver na máquina.
+- Usuário customizado desde o início, evita migração dolorosa depois.
+- Isolamento por usuário no get_queryset, não só no frontend.
+- Compartilhamento é só leitura, garantido por permission class.
+- Feriados via BrasilAPI, aparecem quando o vencimento cai num feriado.
+- Sem lib de UI, CSS puro.
+- Frontend em produção atrás de nginx, build multi-stage.
+- Selenium roda num container próprio, sem instalar Chrome local.
