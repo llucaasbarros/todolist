@@ -12,4 +12,5 @@ ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000
 
+ENTRYPOINT ["bash", "entrypoint.sh"]
 CMD ["python", "src/manage.py", "runserver", "0.0.0.0:8000"]
