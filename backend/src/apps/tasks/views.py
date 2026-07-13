@@ -31,12 +31,10 @@ class TaskViewSet(ModelViewSet):
 
     @action(detail=True, methods=["post"], url_path="share")
     def share(self, request, pk=None):
+        # IsOwnerOrReadOnly already restricts write methods (including this
+        # POST action) to the task owner via check_object_permissions() inside
+        # get_object() below — no need to re-check ownership here.
         task = self.get_object()
-        if task.owner_id != request.user.id:
-            return Response(
-                {"detail": "Apenas o dono pode compartilhar a tarefa."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
 
         username = request.data.get("username")
         if not username:

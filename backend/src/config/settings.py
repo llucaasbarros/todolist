@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.accounts",
     "apps.categories",
     "apps.tasks",
+    "apps.holidays",
 ]
 
 MIDDLEWARE = [

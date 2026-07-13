@@ -139,6 +139,11 @@ body {
   color: var(--color-danger);
 }
 
+.badge-info {
+  background-color: #e3f2f4;
+  color: var(--color-primary);
+}
+
 .card {
   background-color: var(--color-surface);
   border-radius: 8px;

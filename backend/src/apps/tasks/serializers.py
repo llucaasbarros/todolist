@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from apps.categories.serializers import CategorySerializer
+from apps.holidays import services as holidays_services
 
 from .models import TaskModel, TaskShareModel
 
@@ -18,6 +19,7 @@ class TaskSerializer(serializers.ModelSerializer):
     category_detail = CategorySerializer(source="category", read_only=True)
     is_owner = serializers.SerializerMethodField()
     shared_with = serializers.SerializerMethodField()
+    due_date_is_holiday = serializers.SerializerMethodField()
 
     class Meta:
         model = TaskModel
@@ -30,6 +32,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "category_detail",
             "is_completed",
             "due_date",
+            "due_date_is_holiday",
             "priority",
             "is_owner",
             "shared_with",
@@ -46,6 +49,11 @@ class TaskSerializer(serializers.ModelSerializer):
         return TaskShareUserSerializer(
             [share.shared_with for share in obj.shares.all()], many=True
         ).data
+
+    def get_due_date_is_holiday(self, obj):
+        if not obj.due_date:
+            return False
+        return holidays_services.is_holiday(obj.due_date)
 
     def validate_category(self, value):
         request = self.context.get("request")

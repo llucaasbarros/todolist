@@ -56,6 +56,7 @@ export default function TaskItem({
                 Vence em {formatDateBR(task.due_date)}
               </span>
             )}
+            {task.due_date_is_holiday && <span className="badge badge-info">Feriado</span>}
             {!task.is_owner && <span className="badge">Compartilhada</span>}
             {task.is_owner && task.shared_with?.length > 0 && (
               <span className="badge">

@@ -1,0 +1,10 @@
+[run]
+source = src/apps
+omit =
+    */migrations/*
+    */tests.py
+    */apps.py
+    */admin.py
+
+[report]
+skip_empty = True
