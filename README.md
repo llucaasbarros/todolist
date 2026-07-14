@@ -1,13 +1,13 @@
 # To-Do List
 
-Gerenciador de tarefas, teste técnico. Django REST Framework + React, tudo em Docker.
+Gerenciador de tarefas em Django REST Framework + React, subido container Docker.
 
 ## Stack
 
 Backend: Django 5.2, DRF, JWT (simplejwt), Postgres, pytest, drf-spectacular (Swagger).
 Frontend: React 18, Vite, react-router-dom, axios, CSS puro.
-Testes: pytest (backend, com cobertura) e Selenium (frontend).
-CI: GitHub Actions, ruff no backend, eslint no frontend.
+Testes: pytest no back, com coverage e Selenium no frontend.
+CI: GitHub Actions, ruff no backend e eslint no frontend.
 
 ## Como rodar
 
@@ -95,10 +95,8 @@ Frontend, `frontend/src/`:
 - Isolamento por usuário no get_queryset, não só no frontend.
 - Compartilhamento é só leitura, garantido por permission class.
 - Feriados via BrasilAPI, aparecem quando o vencimento cai num feriado.
-- Sem lib de UI, CSS puro.
+- Sem lib de UI, CSS puro
 - Frontend em produção atrás de nginx, build multi-stage.
-- Selenium roda num container próprio, sem instalar Chrome local.
+- Selenium roda num container próprio
 
-## Deploy
 
-Guia de deploy em AWS ECS (Fargate) em [DEPLOY.md](DEPLOY.md). Não roda sozinho — é um workflow manual, disparado só depois de provisionar a infra.
