@@ -13,6 +13,8 @@ CI: GitHub Actions, ruff no backend, eslint no frontend.
 
 Precisa de Docker e Docker Compose.
 
+Clona, copia as variáveis de ambiente e builda + sobe os containers (db, backend, frontend):
+
 ```
 git clone https://github.com/llucaasbarros/todolist.git
 cd todolist
@@ -23,6 +25,13 @@ docker compose up -d
 ```
 
 Migrations rodam sozinhas no start do backend.
+
+Pra buildar cada um separado, sem subir os dois juntos:
+
+```
+docker compose build backend
+docker compose build frontend
+```
 
 frontend: http://localhost:5183
 admin: http://localhost:8000/admin
@@ -41,20 +50,20 @@ docker compose exec backend python src/manage.py createsuperuser
 
 ## Testes
 
-backend:
+Testes do backend, com e sem relatório de cobertura:
 ```
-docker compose exec backend pytest --cov=apps --cov-report=term-missing  # com cobertura
-docker compose exec backend pytest  # sem cobertura
+docker compose exec backend pytest --cov=apps --cov-report=term-missing
+docker compose exec backend pytest
 ```
 
-frontend:
+Lint e build do frontend:
 ```
 cd frontend
 npm run lint
 npm run build
 ```
 
-selenium:
+Testes end-to-end com Selenium, precisa da stack rodando:
 ```
 cd frontend/e2e
 python3 -m venv .venv
@@ -89,3 +98,7 @@ Frontend, `frontend/src/`:
 - Sem lib de UI, CSS puro.
 - Frontend em produção atrás de nginx, build multi-stage.
 - Selenium roda num container próprio, sem instalar Chrome local.
+
+## Deploy
+
+Guia de deploy em AWS ECS (Fargate) em [DEPLOY.md](DEPLOY.md). Não roda sozinho — é um workflow manual, disparado só depois de provisionar a infra.
